@@ -43,13 +43,14 @@ class BitcoinKit : AbstractKit {
     constructor(
             context: Context,
             words: List<String>,
+            salt : String,
             walletId: String,
             networkType: NetworkType = NetworkType.MainNet,
             peerSize: Int = 10,
             syncMode: BitcoinCore.SyncMode = BitcoinCore.SyncMode.Api(),
             confirmationsThreshold: Int = 6,
             bip: Bip = Bip.BIP44
-    ) : this(context, Mnemonic().toSeed(words), walletId, networkType, peerSize, syncMode, confirmationsThreshold, bip)
+    ) : this(context, Mnemonic().toSeedWithPassphrase(words, salt), walletId, networkType, peerSize, syncMode, confirmationsThreshold, bip)
 
     constructor(
             context: Context,

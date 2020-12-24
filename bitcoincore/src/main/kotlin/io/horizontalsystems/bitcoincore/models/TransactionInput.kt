@@ -1,8 +1,6 @@
 package io.horizontalsystems.bitcoincore.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
-import android.arch.persistence.room.TypeConverters
+import android.arch.persistence.room.*
 import io.horizontalsystems.bitcoincore.storage.WitnessConverter
 
 /**
@@ -30,16 +28,51 @@ import io.horizontalsystems.bitcoincore.storage.WitnessConverter
                 deferred = true)
         ])
 
-class TransactionInput(
-        val previousOutputTxHash: ByteArray,
-        val previousOutputIndex: Long,
-        var sigScript: ByteArray = byteArrayOf(),
-        var sequence: Long = 0xfffffffe) {
+class TransactionInput {
 
-    var transactionHash = byteArrayOf()
+    var previousOutputTxHash: ByteArray = byteArrayOf()
+    var previousOutputIndex: Long = 0
+    var sigScript: ByteArray
+    var sequence: Long
+    var transactionHash: ByteArray? = null
     var keyHash: ByteArray? = null
     var address: String? = ""
 
+    constructor(previousOutputTxHash: ByteArray, previousOutputIndex: Long, sigScript: ByteArray = byteArrayOf(), sequence: Long = 0xfffffffe) {
+        this.previousOutputTxHash = previousOutputTxHash
+        this.previousOutputIndex = previousOutputIndex
+        this.sigScript = sigScript
+        this.sequence = sequence
+        this.transactionHash = byteArrayOf()
+        this.witness = listOf()
+    }
+
+    @Ignore
+    constructor(previousOutPoint : TransactionOutPoint, sigScript: ByteArray, sequence : Long) {
+        this.previousOutPoint = previousOutPoint
+        this.sigScript = sigScript
+        this.sequence = sequence
+    }
+    
+
+
     @TypeConverters(WitnessConverter::class)
-    var witness: List<ByteArray> = listOf()
+    lateinit var witness: List<ByteArray>
+
+    @TypeConverters(OutPointTypeConverter::class)
+    lateinit var previousOutPoint: TransactionOutPoint
+}
+
+class OutPointTypeConverter {
+
+    @TypeConverter
+    fun fromOutPoint(outpoint: TransactionOutPoint): ByteArray {
+        return outpoint.serialize()
+    }
+
+    @TypeConverter
+    fun toOutPoint(data: ByteArray): TransactionOutPoint = when {
+        data.isEmpty() -> TransactionOutPoint()
+        else -> TransactionOutPoint.deserialize(data)
+    }
 }

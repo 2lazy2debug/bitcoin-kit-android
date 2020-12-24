@@ -176,7 +176,7 @@ open class Storage(protected open val store: CoreDatabase) : IStorage {
             FullTransactionInfo(
                     tx.block,
                     tx.transaction,
-                    inputs.filter { it.input.transactionHash.contentEquals(tx.transaction.hash) },
+                    inputs.filter { it.input.transactionHash!!.contentEquals(tx.transaction.hash) },
                     outputs.filter { it.transactionHash.contentEquals(tx.transaction.hash) }
             )
         }
@@ -208,7 +208,7 @@ open class Storage(protected open val store: CoreDatabase) : IStorage {
             FullTransactionInfo(
                     tx.block,
                     tx.transaction,
-                    inputs.filter { it.input.transactionHash.contentEquals(tx.transaction.hash) },
+                    inputs.filter { it.input.transactionHash!!.contentEquals(tx.transaction.hash) },
                     outputs.filter { it.transactionHash.contentEquals(tx.transaction.hash) }
             )
         }
