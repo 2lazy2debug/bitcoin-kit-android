@@ -38,38 +38,30 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:support-annotations:28.0.0'
 
-    // RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0'
-
     // Room
     implementation "android.arch.persistence.room:runtime:1.1.1"
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
-    // For cryptocurrency
-    implementation 'com.madgag.spongycastle:core:1.58.0.0'
-
-    // JSON
-    implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.5'
-
-    // HDWallet Kit
-    api 'com.github.horizontalsystems:hd-wallet-kit-android:68903dc'
+    api project(':bitcoincore')
 
     // Test helpers
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.4.1'
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
-    testImplementation "org.powermock:powermock-api-mockito2:2.0.2"
-    testImplementation "org.powermock:powermock-module-junit4:2.0.2"
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.6.0'
+    testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
 
     // Spek
-    testImplementation "org.spekframework.spek2:spek-dsl-jvm:2.0.6"
-    testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:2.0.6"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.spekframework.spek2:spek-dsl-jvm:2.0.3"
+    testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:2.0.3"
+    testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    testImplementation "com.linkedin.dexmaker:dexmaker-mockito-inline:2.19.1"
-    testImplementation "com.android.support.test:runner:1.0.2"
+    // Android Instrumentation Test
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito-inline:2.19.1'
+    androidTestImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.6.0'
 }
 
 repositories {
